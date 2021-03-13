@@ -1,0 +1,8 @@
+.search_field{
+  display: block;
+  margin: 1em auto;
+  width: max-content;
+  & input:focus{
+    outline: none;
+  }
+}

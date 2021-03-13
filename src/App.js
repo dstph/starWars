@@ -1,25 +1,18 @@
-import logo from './logo.svg';
 import './App.css';
+import {LanguageSwitcher, SearchField} from './atomic/molecules/'
+import {FilmsWrapper, Modal} from './atomic/organisms'
+import GlobalStore from './stores/MainStore'
+import { observer } from 'mobx-react'
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <LanguageSwitcher />
+      <FilmsWrapper />
+      <SearchField />
+      {GlobalStore.showModal && <Modal />}
     </div>
   );
 }
 
-export default App;
+export default observer(App);

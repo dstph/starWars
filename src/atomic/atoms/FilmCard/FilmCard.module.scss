@@ -1,0 +1,13 @@
+.film_card {
+  border: 2px solid white;
+  display: flex;
+  // width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  & h4{
+    color: white;
+    font-size: 1em;
+    line-height: 1em;
+  }
+}
