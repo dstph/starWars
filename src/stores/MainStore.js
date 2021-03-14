@@ -1,5 +1,5 @@
-import { observable, makeObservable, action, computed } from 'mobx';
-import { arrSort, regularArrSort, fetchAll } from './functions';
+import { observable, makeObservable, action } from 'mobx';
+import { arrSort, regularArrSort, fetchAll, fetchSearch } from './functions';
 
 class MainStore {
   language = 'en';
@@ -21,6 +21,9 @@ class MainStore {
   modalPlanets = '';
   modalVehicles = '';
   modalSpecies = '';
+  searchInput = '';
+  searchChoice = '';
+  dataFromSearch = '';  
 
   constructor() {
     makeObservable(this, {
@@ -47,7 +50,24 @@ class MainStore {
       setModalVehicles: action,
       modalSpecies: observable,
       setModalSpecies: action,
+      searchInput: observable,
+      setSearchInput: action,
+      searchChoice: observable,
+      setSearchChoice: action,
+      search: action,
+      dataFromSearch: observable,
+      setDataFromSearch: action,
+
     })
+  }
+  setDataFromSearch(value){
+    this.dataFromSearch = value;
+  }
+  setSearchChoice(value){
+    this.searchChoice = value;
+  }
+  setSearchInput(value){
+    this.searchInput = value;
   }
   setModalSpecies(value){
     this.modalVehicles = value
@@ -75,8 +95,6 @@ class MainStore {
     this.setModalPlanets('')
     this.setModalVehicles('')
     this.setModalSpecies('')
-
-
   }
   setLoading(){
     this.loading = !this.loading;
@@ -96,8 +114,9 @@ class MainStore {
 		.then( response => response.json() )
 		.then( data => this.setFilms( arrSort(data.results) ) )
 		.catch( (error) => console.log(error) )
-    .finally(()=> this.setLoading())
+    .finally( () => this.setLoading() )
   }
+  
   showModalHandler=(element)=>{
     this.setShowModal();
     this.setModalFilm(element);
@@ -111,6 +130,13 @@ class MainStore {
       .then(data => this.setModalVehicles(regularArrSort(data)));
       fetchAll(element.species)
       .then(data => this.setModalSpecies(regularArrSort(data)));
+  }
+  search=()=>{
+    this.searchInput && this.searchChoice ? 
+    fetchSearch(this.searchChoice,this.searchInput)
+      .then(data=>this.setDataFromSearch(data.results[0]))
+    : 
+    alert('Please fill all fields ')
   }
   
 }

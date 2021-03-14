@@ -5,4 +5,14 @@
   & input:focus{
     outline: none;
   }
+  & label{
+    color: white;
+  }
+}
+.option{
+  width: 70%;
+  background: white;
+  margin: auto;
+  padding: 0.5em 1em;
+  margin-top: 0.5em;
 }
